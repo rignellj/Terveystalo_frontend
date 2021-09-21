@@ -1,0 +1,17 @@
+.navBar {
+	padding: 1rem;
+	border-bottom: 1px solid black;
+	margin-bottom: 1rem;
+}
+.navBar a {
+	margin: 5px;
+	text-decoration: none;
+	color: rgb(124, 124, 124);
+}
+.navBar a:hover {
+	color: rgb(186, 139, 230);
+}
+.activeLink {
+	color: rgb(10, 62, 97);
+	font-weight: bold;
+}
