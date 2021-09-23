@@ -1,32 +1,46 @@
 import React, { FormEvent } from 'react';
+import { useDispatch } from 'react-redux';
 
-import { CHECKPRIME } from '../../utils/config';
+import { CHECKPRIME_ENDPOINT } from '../../utils/config';
 import { useHttpClient } from '../../hooks/useHttpRequest';
 import useInput from '../../hooks/useInput';
-import Form from '../../components/UI/Form';
-import InputField from '../../components/UI/InputField';
+import Form from '../../components/UI/Form/Form';
+import InputField from '../../components/UI/Form/InputField';
 import Button from '../../components/Button/Button';
+import { ActionTypeModal, ActionTypePrimeNumber } from '../../store/action-types';
+import ErrorModal from '../../components/UI/Modal/ErrorModal';
 
-const Sum: React.FC = () => {
-	const { sendRequest } = useHttpClient();
+const Checkprime: React.FC = () => {
+	const dispatch = useDispatch();
+	const { sendRequest, error, clearError } = useHttpClient();
 	const {
 		value,
 		hasError,
 		reset,
 		valueChangeHandler,
-		inputBlurHandler
+		inputBlurHandler,
+		isValid
 	} = useInput(value => /^\d+$/.test(value));
 
 	const onSubmitHandler = async (event: FormEvent<HTMLFormElement>) => {
+		if (!isValid) return ;
+
 		event.preventDefault();
 
-		const response = await sendRequest(`${CHECKPRIME}/?number=${value}`);
-		console.log(response);
-		reset();
+		try {
+			const response = await sendRequest(`${CHECKPRIME_ENDPOINT}/?number=${value}`);
+			if (response?.data) {
+				const { data: { isPrime } } = response;
+				dispatch({ type: ActionTypePrimeNumber.CHECK_PRIME, payload: { isPrime } });
+				dispatch({ type: ActionTypeModal.IS_OPEN })
+				reset();
+			}
+		} catch (error) { }
 	};
 
 	return (
 		<div className='center'>
+			<ErrorModal errorMessage={error} closeModal={clearError} />
 			<Form onSubmit={onSubmitHandler}>
 				<InputField
 					autoFocus
@@ -48,4 +62,4 @@ const Sum: React.FC = () => {
 	)
 };
 
-export default Sum;
+export default Checkprime;

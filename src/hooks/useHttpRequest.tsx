@@ -1,56 +1,48 @@
-import { useState, useCallback, useRef, useEffect } from 'react';
+import { useState, useCallback } from 'react';
+import axios from 'axios';
 
 export const useHttpClient = () => {
 	const [isLoading, setIsloading] = useState(false);
 	const [error, setError] = useState<null | string>(null);
 
-	const activeHttpRequest = useRef<AbortController[]>([]);
-
-	const sendRequest = useCallback(async (url: string, method = 'GET', credentials = 'omit', body = null, headers = {}) => {
+	const sendRequest = useCallback(async (url: string, method = 'get', withCredentials = false, params = {}, data = {}, headers = {}) => {
 		setIsloading(true);
-		const httpAbortCtrl = new AbortController();
-		activeHttpRequest.current.push(httpAbortCtrl);
+
+		const CancelToken = axios.CancelToken;
+		const { token, cancel } = CancelToken.source();
 
 		try {
-			const response = await fetch(url, {
+			const response = await axios({
 				method,
-				credentials,
-				body,
+				url,
+				withCredentials,
+				params,
+				data,
 				headers,
-				signal: httpAbortCtrl.signal
+				cancelToken: token
 			});
-			const responseData = await response.json();
-
-			activeHttpRequest.current = activeHttpRequest.current.filter(
-				reqCtrl => reqCtrl !== httpAbortCtrl
-			);
-
-			if (!response.ok) {
-				throw new Error(responseData.message);
-			}
 			setIsloading(false);
-			return responseData;
-		} catch (error) {
-			if (error instanceof Error) {
-				if (error.name === 'AbortError') {
-					setIsloading(false);
-					console.log('Fetch aborted');
-				} else {
-					setIsloading(false);
-					setError(error.message);
-					throw error;
-				}
+			return response;
+		} catch (error: any) {
+			if (axios.isCancel(error)) {
+				setIsloading(false);
+				console.log('Request canceled');
+			}
+			else if (error.response) {
+				setIsloading(false);
+				setError(error.response.data.message);
+			} else if (error.request) {
+				setIsloading(false);
+				setError('Response was not received.');
+			} else {
+				setIsloading(false);
+				setError('Something went wrong.');
 			}
 		}
+		cancel('Operation canceled by the user.');
 	}, []);
 
 	const clearError = () => setError(null);
-
-	useEffect(() => {
-		return () => {
-			activeHttpRequest.current.forEach(abortCtrl => abortCtrl.abort());
-		};
-	}, []);
 
 	return { isLoading, error, sendRequest, clearError };
 };

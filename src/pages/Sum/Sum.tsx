@@ -1,33 +1,48 @@
 import React, { FormEvent } from 'react';
+import { useDispatch } from 'react-redux';
 
-import { SUM } from '../../utils/config';
+import { SUM_ENDPOINT } from '../../utils/config';
+import { ActionTypeModal, ActionTypePrimeNumber } from '../../store/action-types';
 import useInput from '../../hooks/useInput';
 import { useHttpClient } from '../../hooks/useHttpRequest';
-import Form from '../../components/UI/Form';
-import InputField from '../../components/UI/InputField';
+import Form from '../../components/UI/Form/Form';
+import InputField from '../../components/UI/Form/InputField';
 import Button from '../../components/Button/Button';
+import ErrorModal from '../../components/UI/Modal/ErrorModal';
 
 const Sum: React.FC = () => {
-	const { sendRequest } = useHttpClient();
+	const dispatch = useDispatch();
+	const { sendRequest, error, clearError } = useHttpClient();
 	const {
 		value,
 		hasError,
 		reset,
 		valueChangeHandler,
-		inputBlurHandler
+		inputBlurHandler,
+		isValid
 	} = useInput(value => /^(\d|,)+$/.test(value));
 
 	const onSubmitHandler = async (event: FormEvent<HTMLFormElement>) => {
+		if (!isValid) return ;
+
 		event.preventDefault();
+
 		try {
-			const response = await sendRequest(`${SUM}/?numbers=${value}`);
-			console.log(response);
+			const response = await sendRequest(`${SUM_ENDPOINT}/?numbers=${value}`);
+			if (response?.data) {
+				const { data: { result, isPrime } } = response;
+				dispatch({ type: ActionTypePrimeNumber.SUM_PRIME, payload: {
+					result, isPrime
+				}});
+				dispatch({ type: ActionTypeModal.IS_OPEN });
+				reset();
+			}
 		} catch (error) { }
-		reset();
 	};
 
 	return (
 		<div className='center'>
+			<ErrorModal errorMessage={error} closeModal={clearError} />
 			<Form onSubmit={onSubmitHandler}>
 				<InputField
 					autoFocus
@@ -47,7 +62,7 @@ const Sum: React.FC = () => {
 				</Button>
 			</Form>
 		</div>
-	)
+	);
 };
 
 export default Sum;
