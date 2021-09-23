@@ -2,7 +2,7 @@ import React from 'react';
 import { Redirect, Route, Switch } from 'react-router-dom';
 
 import Home from '../pages/Home/Home';
-import CheckprimeRoute from './CheckprimeRoute';
+import CheckPrimeRoute from './CheckPrimeRoute';
 import SumRoute from './SumRoute';
 
 const Routes: React.FC = () => {
@@ -15,7 +15,7 @@ const Routes: React.FC = () => {
 				<SumRoute />
 			</Route>
 			<Route path='/checkprime'>
-				<CheckprimeRoute />
+				<CheckPrimeRoute />
 			</Route>
 			<Route path='*'>
 				<Redirect to='/' />

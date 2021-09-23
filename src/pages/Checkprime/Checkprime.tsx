@@ -1,7 +1,7 @@
 import React, { FormEvent } from 'react';
 import { useDispatch } from 'react-redux';
 
-import { CHECKPRIME_ENDPOINT } from '../../utils/config';
+import { CHECK_PRIME_ENDPOINT } from '../../utils/config';
 import { useHttpClient } from '../../hooks/useHttpRequest';
 import useInput from '../../hooks/useInput';
 import Form from '../../components/UI/Form/Form';
@@ -10,7 +10,7 @@ import Button from '../../components/Button/Button';
 import { ActionTypeModal, ActionTypePrimeNumber } from '../../store/action-types';
 import ErrorModal from '../../components/UI/Modal/ErrorModal';
 
-const Checkprime: React.FC = () => {
+const CheckPrime: React.FC = () => {
 	const dispatch = useDispatch();
 	const { sendRequest, error, clearError } = useHttpClient();
 	const {
@@ -28,7 +28,7 @@ const Checkprime: React.FC = () => {
 		event.preventDefault();
 
 		try {
-			const response = await sendRequest(`${CHECKPRIME_ENDPOINT}/?number=${value}`);
+			const response = await sendRequest(`${CHECK_PRIME_ENDPOINT}/?number=${value}`);
 			if (response?.data) {
 				const { data: { isPrime } } = response;
 				dispatch({ type: ActionTypePrimeNumber.CHECK_PRIME, payload: { isPrime } });
@@ -62,4 +62,4 @@ const Checkprime: React.FC = () => {
 	)
 };
 
-export default Checkprime;
+export default CheckPrime;
