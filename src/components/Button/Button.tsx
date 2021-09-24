@@ -1,4 +1,5 @@
 import React from 'react';
+
 import classes from './Button.module.css';
 
 interface IProps {
@@ -7,7 +8,7 @@ interface IProps {
   onClick?: (() => {} | Window | null | void),
   disabled?: boolean | undefined,
   children?: React.ReactNode
-}
+};
 
 const Button = ({
   type,

@@ -45,6 +45,7 @@
     ]
   },
   "devDependencies": {
+    "@testing-library/react-hooks": "^7.0.2",
     "@types/react-redux": "^7.1.18",
     "@types/react-router-dom": "^5.1.9"
   }

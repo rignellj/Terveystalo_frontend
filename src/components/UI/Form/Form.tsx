@@ -1,7 +1,7 @@
 import React from 'react';
 
 interface IProps {
-    onSubmit: (event: React.FormEvent<HTMLFormElement>) => Promise<void>
+    onSubmit: (event: React.FormEvent<HTMLFormElement>) => Promise<void>;
 }
 
 const Form: React.FC<IProps> = ({ children, onSubmit }) => {

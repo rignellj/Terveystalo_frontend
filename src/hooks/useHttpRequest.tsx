@@ -1,11 +1,14 @@
 import { useState, useCallback } from 'react';
-import axios from 'axios';
+import axios, { Method } from 'axios';
 
 export const useHttpClient = () => {
 	const [isLoading, setIsloading] = useState(false);
 	const [error, setError] = useState<null | string>(null);
 
-	const sendRequest = useCallback(async (url: string, method = 'get', withCredentials = false, params = {}, data = {}, headers = {}) => {
+	const sendRequest = useCallback(async (url: string | undefined, method: Method | undefined = 'get',
+		withCredentials: boolean | undefined = false, params: any = {}, data: any = {},
+		headers: any = {}
+	) => {
 		setIsloading(true);
 
 		const CancelToken = axios.CancelToken;

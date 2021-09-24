@@ -35,9 +35,9 @@ const inputStateReducer = (
 	return state;
 };
 
-const useInput = (validateValue: (value: string) => boolean) => {
+const useInput = (validateValue: (value: string) => boolean, initialState?: string) => {
 	const [inputState, dispatch] = useReducer(inputStateReducer, {
-		value: '',
+		value: initialState || '',
 		isTouched: false
 	});
 

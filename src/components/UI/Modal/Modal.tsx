@@ -18,7 +18,7 @@ interface IProps {
 	footer?: ReactNode;
 	closeButton?: boolean;
 	closeButtonText?: string;
-}
+};
 
 const Modal: React.FC<IProps> = ({
 	closeModal, modalIsOpen, className, header, headerClass, children,
@@ -51,6 +51,6 @@ const Modal: React.FC<IProps> = ({
 			</div>
 		</React.Fragment>
 	);
-}
+};
 
 export default Modal;

@@ -2,24 +2,20 @@ import React, { FormEvent } from 'react';
 import { useDispatch } from 'react-redux';
 
 import { CHECK_PRIME_ENDPOINT } from '../../utils/config';
+import { ActionTypeModal, ActionTypePrimeNumber } from '../../store/action-types';
 import { useHttpClient } from '../../hooks/useHttpRequest';
 import useInput from '../../hooks/useInput';
 import Form from '../../components/UI/Form/Form';
 import InputField from '../../components/UI/Form/InputField';
 import Button from '../../components/Button/Button';
-import { ActionTypeModal, ActionTypePrimeNumber } from '../../store/action-types';
 import ErrorModal from '../../components/UI/Modal/ErrorModal';
 
 const CheckPrime: React.FC = () => {
 	const dispatch = useDispatch();
 	const { sendRequest, error, clearError } = useHttpClient();
 	const {
-		value,
-		hasError,
-		reset,
-		valueChangeHandler,
-		inputBlurHandler,
-		isValid
+		value, hasError, reset, valueChangeHandler,
+		inputBlurHandler, isValid
 	} = useInput(value => /^\d+$/.test(value));
 
 	const onSubmitHandler = async (event: FormEvent<HTMLFormElement>) => {
@@ -29,6 +25,7 @@ const CheckPrime: React.FC = () => {
 
 		try {
 			const response = await sendRequest(`${CHECK_PRIME_ENDPOINT}/?number=${value}`);
+
 			if (response?.data) {
 				const { data: { isPrime } } = response;
 				dispatch({ type: ActionTypePrimeNumber.CHECK_PRIME, payload: { isPrime } });
