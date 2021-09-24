@@ -51,7 +51,7 @@ There are three pages in this app: `Home`, `Check Prime Number` and `Sum`.
 
 ## Routes
 
-Routes are handled with `react-router-dom` package which serves <Home /> component when user navigates to '/'. If user navigates to '/sum' package serves <SumRoute /> component and when user go to '/checkprime' react renders <CheckPrimeRoute /> component. Otherwise, if none of the above routes are visited, user will be redirected to '/'.
+Routes are handled with `react-router-dom` package which serves `<Home />` component when user navigates to `'/'`. If user navigates to `'/sum'` package serves `<SumRoute />` component and when user go to `'/checkprime'` react renders `<CheckPrimeRoute />` component. Otherwise, if none of the above routes are visited, user will be redirected to `'/'`.
 
 ## State Management
 
