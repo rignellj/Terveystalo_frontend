@@ -61,13 +61,13 @@ Routes are handled with `react-router-dom` package which serves `<Home />` compo
 ## Custom Hooks
 
 There are three custom hooks:
-1. `useHttpClient` which makes the http request utilizing axios package. This hook returns `sendRequest()`, `error`, `clearError()` and `isLoading`.
+1. `useHttpClient` which makes the http request utilizing `axios` package. This hook returns `sendRequest()`, `error`, `clearError()` and `isLoading`.
 2. `useInput` helps to dispatch a value on the input. Input type can be either `<textarea/>` or `input` depending on how developer has configured it. Hook returns the `value` that will be bound to the html element, `hasError` which helps to show the error message, `reset()` which resets the input, `isValid` which helps to define if form is submittable, `valueChangeHandler()` which actually changes the value of the html element `onChange`, `inputBlurHandler()` which helps to define if the user has touched the input.
 3. `useTypedSelector` hook is there to select state from the `redux store` without Typescript needing to complain.
 
 ## Components
 
-Components have been designed in a way that they are easy to configure outside of the component. Some of them have custom styles inside of them but these can be overwritten as well. `Backdrop` component has `portal` which means that anytime Backdrop component is rendered, it will be mounted on the `div` which has the id='backdrop-hook'. This can be found from the index.html file.
+Components have been designed in a way that they are easy to configure outside of the component. Some of them have custom styles inside of them but these can be overwritten as well. `Backdrop` component has `portal` which means that anytime Backdrop component is rendered, it will be mounted on the `div` which has the `id='backdrop-hook'`. This can be found from the `index.html` file.
 
 
 ## Tests
