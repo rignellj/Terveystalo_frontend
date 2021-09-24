@@ -69,3 +69,8 @@ There are three custom hooks:
 
 Components have been designed in a way that they are easy to configure outside of the component. Some of them have custom styles inside of them but these can be overwritten as well. `Backdrop` component has `portal` which means that anytime Backdrop component is rendered, it will be mounted on the `div` which has the id='backdrop-hook'. This can be found from the index.html file.
 
+
+## Tests
+
+- There are tests for the components: `Button`, `Form`, `InputField` and `NavBar`.
+- And also for the custom hooks: `useHttpClient` and `useInput`.
