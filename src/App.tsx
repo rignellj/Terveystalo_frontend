@@ -1,7 +1,7 @@
 import React from 'react';
 
 import NavBar from './components/NavBar/NavBar';
-import Routes from './routes';
+import Routes from './routes/index';
 
 import './App.css';
 
