@@ -1,7 +1,7 @@
 import React, { FormEvent } from 'react';
 import { useDispatch } from 'react-redux';
 
-import { SUM_ENDPOINT } from '../../utils/config';
+// import { SUM_ENDPOINT } from '../../utils/config';
 import { ActionTypeModal, ActionTypePrimeNumber } from '../../store/action-types';
 import useInput from '../../hooks/useInput';
 import { useHttpClient } from '../../hooks/useHttpRequest';
@@ -24,7 +24,7 @@ const Sum: React.FC = () => {
 		event.preventDefault();
 
 		try {
-			const response = await sendRequest(`${SUM_ENDPOINT}/?numbers=${value}`);
+			const response = await sendRequest(`${process.env.REACT_APP_API_SUM}?numbers=${value}`);
 
 			if (response?.data) {
 				const { data: { result, isPrime } } = response;

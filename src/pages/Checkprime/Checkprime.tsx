@@ -1,7 +1,7 @@
 import React, { FormEvent } from 'react';
 import { useDispatch } from 'react-redux';
 
-import { CHECK_PRIME_ENDPOINT } from '../../utils/config';
+// import { CHECK_PRIME_ENDPOINT } from '../../utils/config';
 import { ActionTypeModal, ActionTypePrimeNumber } from '../../store/action-types';
 import { useHttpClient } from '../../hooks/useHttpRequest';
 import useInput from '../../hooks/useInput';
@@ -24,7 +24,7 @@ const CheckPrime: React.FC = () => {
 		event.preventDefault();
 
 		try {
-			const response = await sendRequest(`${CHECK_PRIME_ENDPOINT}/?number=${value}`);
+			const response = await sendRequest(`${process.env.REACT_APP_API_CHECKPRIME}?number=${value}`);
 
 			if (response?.data) {
 				const { data: { isPrime } } = response;
