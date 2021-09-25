@@ -1,7 +1,6 @@
 import React, { FormEvent } from 'react';
 import { useDispatch } from 'react-redux';
 
-// import { CHECK_PRIME_ENDPOINT } from '../../utils/config';
 import { ActionTypeModal, ActionTypePrimeNumber } from '../../store/action-types';
 import { useHttpClient } from '../../hooks/useHttpRequest';
 import useInput from '../../hooks/useInput';
